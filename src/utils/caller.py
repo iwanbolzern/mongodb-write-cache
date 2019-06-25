@@ -11,7 +11,7 @@ class Caller:
 
     def append(self, cb):
         """ Register cb as a new callback. Will not register duplicates. """
-        if ((cb in self.callbacks) is False):
+        if cb not in self.callbacks:
             self.callbacks.append(cb)
 
     def remove(self, cb):
