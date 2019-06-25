@@ -5,7 +5,7 @@ used it in a project where sensor values were stored for further analysis. The v
 persisted when either the buffer is filled or the flush time has elapsed. 
 
 ## Usage
-```
+```python
 # create normal pymongo connection
 mongo_client = MongoClient('localhost', 27017)
 database = mongo_client['test_db']
