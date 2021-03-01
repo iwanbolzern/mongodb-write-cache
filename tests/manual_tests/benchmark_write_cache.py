@@ -3,16 +3,16 @@ from threading import Semaphore
 
 from pymongo import MongoClient
 
-from mongo_db_async_cache import AsyncWriteCache
-from mongo_db_sync_cache import SyncWriteCache
+from pymongo_write_cache.mongo_db_async_cache import AsyncWriteCache
+from pymongo_write_cache.mongo_db_sync_cache import SyncWriteCache
 
 buffer_time = timedelta(seconds=20)
-buffer_size = 10000
-test_size = 5
+buffer_size = int(1e4)
+test_size = int(1e5)
 
 
 def get_test_collection():
-    mongo_client = MongoClient('mongodb://192.168.99.100:27017/')
+    mongo_client = MongoClient('mongodb://localhost:27017/')
     mongo_client.drop_database('test_db')
     database = mongo_client['test_db']
     return database['test_col']

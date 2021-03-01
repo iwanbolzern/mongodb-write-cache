@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from pymongo import MongoClient
 
-from mongo_db_sync_cache import SyncWriteCache
+from pymongo_write_cache.mongo_db_sync_cache import SyncWriteCache
 
 
 class TestMongoDbSyncWriteCache(TestCase):
@@ -14,7 +14,7 @@ class TestMongoDbSyncWriteCache(TestCase):
         self.buffer_time = timedelta(seconds=20)
         self.buffer_size = 10
 
-        self.mongo_client = MongoClient('mongodb://192.168.99.100:27017/')
+        self.mongo_client = MongoClient('mongodb://localhost:27017/')
         self.mongo_client.drop_database('test_db')
         self.database = self.mongo_client['test_db']
         self.col = self.database['test_col']
