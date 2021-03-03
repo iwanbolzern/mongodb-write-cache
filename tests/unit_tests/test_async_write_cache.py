@@ -4,7 +4,7 @@ from threading import Event
 from unittest import TestCase
 from unittest.mock import Mock
 
-from pymongo_write_cache.mongo_db_async_cache import AsyncWriteCache
+from pymongo_write_cache import AsyncWriteCache
 
 
 class TestAsyncCache(TestCase):

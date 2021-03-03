@@ -1,14 +1,15 @@
 import copy
 import time
 from datetime import timedelta
+from threading import Event
 from unittest import TestCase
 
 from pymongo import MongoClient
 
-from pymongo_write_cache.mongo_db_sync_cache import SyncWriteCache
+from pymongo_write_cache import AsyncWriteCache
 
 
-class TestMongoDbSyncWriteCache(TestCase):
+class TestMongoDbAsyncWriteCache(TestCase):
 
     def setUp(self) -> None:
         self.buffer_time = timedelta(seconds=20)
@@ -19,7 +20,7 @@ class TestMongoDbSyncWriteCache(TestCase):
         self.database = self.mongo_client['test_db']
         self.col = self.database['test_col']
 
-        self.subject = SyncWriteCache(self.col, self.buffer_size, self.buffer_time)
+        self.subject = AsyncWriteCache(self.col, self.buffer_size, self.buffer_time)
 
     def test_insert_time_buffer(self):
         data = {'value1': 1, 'value2': [1, 2, 4]}
@@ -33,7 +34,7 @@ class TestMongoDbSyncWriteCache(TestCase):
         # wait a bit longer than buffer time
         time.sleep(self.buffer_time.total_seconds() + 2)
 
-        # check again if now document is in database
+        # check again if now the document is in the database
         docs = list(self.col.find())
         self.assertEqual(1, len(docs))
         del docs[0]['_id']
@@ -41,9 +42,12 @@ class TestMongoDbSyncWriteCache(TestCase):
 
     def test_insert_count_buffer(self):
         data = {'value1': 1, 'value2': [1, 2, 4]}
+        event = Event()
+        self.subject.flush_callback.append(event.set)
         for _ in range(self.buffer_size):
             self.subject.insert_one(copy.deepcopy(data))
 
+        event.wait(2)
         docs = list(self.col.find())
         self.assertEqual(self.buffer_size, len(docs))
         for doc in docs:

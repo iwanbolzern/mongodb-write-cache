@@ -3,7 +3,7 @@ from threading import Event
 from unittest import TestCase
 from unittest.mock import Mock
 
-from pymongo_write_cache.mongo_db_sync_cache import SyncWriteCache
+from pymongo_write_cache import SyncWriteCache
 
 
 class TestSyncCache(TestCase):

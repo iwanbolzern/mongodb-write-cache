@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from pymongo.collection import Collection
 
-from pymongo_write_cache.mongo_db_async_cache import AsyncWriteCache
+from pymongo_write_cache.async_write_cache import AsyncWriteCache
 
 
 class SyncWriteCache(AsyncWriteCache):

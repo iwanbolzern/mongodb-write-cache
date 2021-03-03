@@ -3,8 +3,8 @@ from threading import Semaphore
 
 from pymongo import MongoClient
 
-from pymongo_write_cache.mongo_db_async_cache import AsyncWriteCache
-from pymongo_write_cache.mongo_db_sync_cache import SyncWriteCache
+from pymongo_write_cache import AsyncWriteCache
+from pymongo_write_cache import SyncWriteCache
 
 buffer_time = timedelta(seconds=20)
 buffer_size = int(1e4)
